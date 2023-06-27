@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void loginClicked(View view){
         System.out.println("Button clicked");
+        clevertapDefaultInstance.pushEvent("Button clicked");
     }
 
     private void goToWV()
