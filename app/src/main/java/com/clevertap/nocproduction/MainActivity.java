@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,14 +17,15 @@ import com.clevertap.android.sdk.interfaces.OnInitCleverTapIDListener;
 import com.clevertap.android.sdk.pushnotification.PushConstants;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     CleverTapAPI clevertapDefaultInstance;
     FirebaseAnalytics mFirebaseAnalytics;
-    Button wv_button,dl_btn;
-    TextView textView;
+    Button wv_button,dl_btn,loginButton;
+    EditText username,email,phone;
 
     @SuppressLint({"WrongThread", "MissingPermission"})
     protected void onCreate(Bundle savedInstanceState)
@@ -31,6 +33,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         clevertapDefaultInstance = CleverTapAPI.getDefaultInstance(getApplicationContext());
+
+
+        username = (EditText) findViewById(R.id.name);
+        email = (EditText) findViewById(R.id.loginEmail);
+        phone = (EditText) findViewById(R.id.loginPhone);
+
+        loginButton = (Button) findViewById(R.id.buttonLogin);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String loginName = username.getText().toString();
+                String loginEmail = email.getText().toString();
+                String loginPhone = phone.getText().toString();
+                System.out.println("Button clicked");
+
+                HashMap<String, Object> profileUpdate = new HashMap<String, Object>();
+                profileUpdate.put("Name", loginName);
+                profileUpdate.put("Email", loginEmail);
+                profileUpdate.put("Phone", loginPhone);
+                clevertapDefaultInstance.onUserLogin(profileUpdate);
+                clevertapDefaultInstance.pushEvent("Button clicked");
+            }
+        });
         //clevertapDefaultInstance.setNotificationHandler(new PushTemplateNotificationHandler());
         CleverTapAPI.setDebugLevel(CleverTapAPI.LogLevel.DEBUG);
 
@@ -51,10 +77,6 @@ public class MainActivity extends AppCompatActivity {
         //Methods for Realtime Uninstall implementation
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mFirebaseAnalytics.setUserProperty("ct_objectId", Objects.requireNonNull(CleverTapAPI.getDefaultInstance(this)).getCleverTapID());
-    }
-    public void loginClicked(View view){
-        System.out.println("Button clicked");
-        clevertapDefaultInstance.pushEvent("Button clicked");
     }
 
     private void goToWV()
