@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 profileUpdate.put("Email", loginEmail);
                 profileUpdate.put("Phone", loginPhone);
                 clevertapDefaultInstance.onUserLogin(profileUpdate);
+                Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(getApplicationContext(),HomeScreenActivity.class);
+                startActivity(intent);
                 clevertapDefaultInstance.pushEvent("Button clicked");
             }
         });

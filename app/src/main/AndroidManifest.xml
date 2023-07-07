@@ -5,34 +5,36 @@
     <!-- Required to allow the app to send events and user profile information -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- Recommended so that CleverTap knows when to attempt a network call -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Recommended so that CleverTap knows when to attempt a network call -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="com.clevertap.android.sdk.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NOCProduction2"
-        android:name="com.clevertap.android.sdk.Application">
+        android:theme="@style/Theme.NOCProduction2">
+        <activity
+            android:name=".HomeScreenActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="CLEVERTAP_ACCOUNT_ID"
-            android:value="R5Z-96K-676Z"/>
+            android:value="R5Z-96K-676Z" />
         <meta-data
             android:name="CLEVERTAP_TOKEN"
-            android:value="36c-152"/>
-        <!-- IMPORTANT: To force use Google AD ID to uniquely identify  users, use the following meta tag. GDPR mandates that if you are using this tag, there is prominent disclousure to your end customer in their application. Read more about GDPR here - https://clevertap.com/blog/in-preparation-of-gdpr-compliance/ -->
+            android:value="36c-152" /> <!-- IMPORTANT: To force use Google AD ID to uniquely identify  users, use the following meta tag. GDPR mandates that if you are using this tag, there is prominent disclousure to your end customer in their application. Read more about GDPR here - https://clevertap.com/blog/in-preparation-of-gdpr-compliance/ -->
         <meta-data
             android:name="CLEVERTAP_USE_GOOGLE_AD_ID"
-            android:value="0"/>
+            android:value="0" />
 
         <activity
             android:name=".WVActivity"
             android:exported="false" />
+
         <service
             android:name=".MyFirebaseService"
             android:enabled="true"
@@ -41,13 +43,16 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".DLActivity"
             android:exported="true"
             tools:ignore="AppLinkUrlError">
+
             <!-- Deeplinks -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "https://www.external.com/gizmos” -->
@@ -57,13 +62,11 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.NOCProduction2.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
